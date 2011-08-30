@@ -64,7 +64,7 @@ def generate_pdf(template_name, file_object=None, context=None): # pragma: no co
 
 def render_to_pdf_response(template_name, context=None, pdfname=None):
     file_object = HttpResponse(content_type='application/pdf')
-    if not pdfnmae:
+    if not pdfname:
         pdfname = '%s.pdf' % os.path.splitext(os.path.basename(template_name))[0]
     file_object['Content-Disposition'] = 'attachment; filename=%s' % pdfname
     return generate_pdf(template_name, file_object, context)
