@@ -26,6 +26,12 @@ def fetch_resources(uri, rel):
     elif uri.startswith(settings.STATIC_URL):
         path = os.path.join(settings.STATIC_ROOT,
                             uri.replace(settings.STATIC_URL, ""))
+        if not os.path.isfile(path):
+            for directory in settings.STATICFILES_DIRS:
+                path = os.path.join(directory,
+                            uri.replace(settings.STATIC_URL, ""))
+                if os.path.isfile(path):
+                    break
     else:
         raise UnsupportedMediaPathException(
                                 'media urls must start with %s or %s' % (
@@ -42,17 +48,17 @@ def generate_pdf_template_object(template_object, file_object, context):
     return file_object
 
 #===============================================================================
-# Main 
+# Main
 #===============================================================================
 
 def generate_pdf(template_name, file_object=None, context=None): # pragma: no cover
     """
     Uses the xhtml2pdf library to render a PDF to the passed file_object, from the
     given template name.
-    
+
     This returns the passed-in file object, filled with the actual PDF data.
     In case the passed in file object is none, it will return a StringIO instance.
-    
+
     """
     if not file_object:
         file_object = StringIO.StringIO()
