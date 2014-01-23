@@ -32,20 +32,20 @@ def fetch_resources(uri, rel):
                                 settings.MEDIA_ROOT, settings.STATIC_ROOT))
     return path
 
-def generate_pdf_template_object(template_object, file_object, context):
+def generate_pdf_template_object(template_object, file_object, context, link_callback=fetch_resources):
     """
     Inner function to pass template objects directly instead of passing a filename
     """
     html = template_object.render(Context(context))
     pisa.CreatePDF(html.encode("UTF-8"), file_object , encoding='UTF-8',
-                   link_callback=fetch_resources)
+                   link_callback=link_callback)
     return file_object
 
 #===============================================================================
 # Main 
 #===============================================================================
 
-def generate_pdf(template_name, file_object=None, context=None): # pragma: no cover
+def generate_pdf(template_name, file_object=None, context=None, link_callback=fetch_resources): # pragma: no cover
     """
     Uses the xhtml2pdf library to render a PDF to the passed file_object, from the
     given template name.
@@ -59,12 +59,12 @@ def generate_pdf(template_name, file_object=None, context=None): # pragma: no co
     if not context:
         context = {}
     tmpl = get_template(template_name)
-    generate_pdf_template_object(tmpl, file_object, context)
+    generate_pdf_template_object(tmpl, file_object, context, link_callback=link_callback)
     return file_object
 
-def render_to_pdf_response(template_name, context=None, pdfname=None):
+def render_to_pdf_response(template_name, context=None, pdfname=None, link_callback=fetch_resources):
     file_object = HttpResponse(content_type='application/pdf')
     if not pdfname:
         pdfname = '%s.pdf' % os.path.splitext(os.path.basename(template_name))[0]
     file_object['Content-Disposition'] = 'attachment; filename=%s' % pdfname
-    return generate_pdf(template_name, file_object, context)
+    return generate_pdf(template_name, file_object, context, link_callback=link_callback)
