@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.template.context import Context
 from django.template.loader import get_template
 from xhtml2pdf import pisa # TODO: Change this when the lib changes.
+from urllib import unquote
 import StringIO
 import os
 
@@ -13,13 +14,14 @@ import os
 class UnsupportedMediaPathException(Exception):
     pass
 
-def fetch_resources(uri, rel):
+def fetch_resources(urlencoded_uri, rel):
     """
     Callback to allow xhtml2pdf/reportlab to retrieve Images,Stylesheets, etc.
     `uri` is the href attribute from the html link element.
     `rel` gives a relative path, but it's not used here.
 
     """
+    uri = unquote(urlencoded_uri)
     if uri.startswith(settings.MEDIA_URL):
         path = os.path.join(settings.MEDIA_ROOT,
                             uri.replace(settings.MEDIA_URL, ""))
