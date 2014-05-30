@@ -22,3 +22,18 @@ Simply do the following::
         result = generate_pdf('my_template.html', file_object=resp)
         return result
 
+Class-based views
+=================
+
+You can use the provided PdfMixin with any view that subclasses TemplateView,
+example::
+
+    from django.views.generic.detail import DetailView
+    from django_xhtml2pdf.views import PdfMixin
+    from .models import Product
+
+    class ProductPdfView(PdfMixin, DetailView):
+        model = Product
+        template_name = "product_pdf.html"
+
+It will output the rendered content of the view in pdf.
