@@ -1,4 +1,5 @@
 #-*- coding: utf-8 -*-
+import django
 from django.conf import settings
 from django.http import HttpResponse
 from django.template.context import Context
@@ -43,7 +44,10 @@ def generate_pdf_template_object(template_object, file_object, context, link_cal
     """
     Inner function to pass template objects directly instead of passing a filename
     """
-    html = template_object.render(context)
+    if django.VERSION > (1,10):
+        html = template_object.render(context)
+    else:
+        html = template_object.render(Context(context))
     pisa.CreatePDF(html.encode("UTF-8"), file_object , encoding='UTF-8',
                    link_callback=link_callback)
     return file_object
