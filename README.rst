@@ -1,6 +1,11 @@
 Django xhtml2pdf
 ################
 
+THIS PROJECT IS UNMAINTAINED
+=============================
+
+I haven't used this porject in years so it probably suffers from bitrot. Please get in touch if you would like to take over maintainership.
+
 
 THis project is wrapper code between the django project and the xhtml2pdf
 project.
