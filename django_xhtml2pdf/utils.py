@@ -4,7 +4,10 @@ from django.http import HttpResponse
 from django.template.context import Context
 from django.template.loader import get_template
 from xhtml2pdf import pisa # TODO: Change this when the lib changes.
-import StringIO
+try:  # Py2
+    import StringIO
+except ImportError:  # Py3
+    import io as StringIO
 import os
 
 #===============================================================================
@@ -43,7 +46,8 @@ def generate_pdf_template_object(template_object, file_object, context, link_cal
     """
     Inner function to pass template objects directly instead of passing a filename
     """
-    html = template_object.render(Context(context))
+
+    html = template_object.render(context)
     pisa.CreatePDF(html.encode("UTF-8"), file_object , encoding='UTF-8',
                    link_callback=link_callback)
     return file_object
