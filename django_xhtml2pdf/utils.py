@@ -34,6 +34,18 @@ def fetch_resources(uri, rel):
     elif uri.startswith("http://") or uri.startswith("https://"):
         path = uri
     else:
+        path = os.path.join(settings.STATIC_ROOT,
+                            uri.replace(settings.STATIC_URL, ""))
+
+        if not os.path.isfile(path):
+            path = os.path.join(settings.MEDIA_ROOT,
+                                uri.replace(settings.MEDIA_URL, ""))
+
+            if not os.path.isfile(path):
+                raise UnsupportedMediaPathException(
+                                    'media urls must start with %s or %s' % (
+                                    settings.MEDIA_ROOT, settings.STATIC_ROOT))
+
         raise UnsupportedMediaPathException(
                                 'media urls must start with %s or %s' % (
                                 settings.MEDIA_URL, settings.STATIC_URL))
