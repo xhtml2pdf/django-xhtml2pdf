@@ -12,6 +12,16 @@ def test_view(request):
     return result
 
 
+
+def test_view_fileobject(request):
+    # this test file_object as None in py2 and py3
+    resp = HttpResponse(content_type='application/pdf')
+    result = generate_pdf('test_pdf.html')
+    result.seek(0)
+    resp.write(result.read())
+    return resp
+
+
 def test_render_response(request):
     return render_to_pdf_response('test_pdf.html')
 

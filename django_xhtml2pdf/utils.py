@@ -7,9 +7,9 @@ from django.template.response import TemplateResponse
 from xhtml2pdf import pisa # TODO: Change this when the lib changes.
 from django.conf import settings
 try:
-    from StringIO import StringIO, BytesIO
+    from StringIO import BytesIO
 except:
-    from io import StringIO, BytesIO
+    from io import BytesIO
 
 import os
 import posixpath
@@ -78,11 +78,11 @@ def generate_pdf(template_name, file_object=None, context=None,
     given template name.
 
     This returns the passed-in file object, filled with the actual PDF data.
-    In case the passed in file object is none, it will return a StringIO instance.
+    In case the passed in file object is none, it will return a BytesIO instance.
 
     """
     if not file_object:
-        file_object = StringIO()
+        file_object = BytesIO()
     if not context:
         context = {}
     tmpl = get_template(template_name)

@@ -27,4 +27,5 @@ Go to this urls
 - http://localhost:8000/test_view
 - http://localhost:8000/test_render_response
 - http://localhost:8000/test_user/1
-- http://localhost:8100/render_template_decorated
+- http://localhost:8000/render_template_decorated
+- http://localhost:8000/test_view_fileobject

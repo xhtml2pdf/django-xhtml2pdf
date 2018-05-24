@@ -16,12 +16,13 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from views import test_view, test_render_response, UserPdfView, \
-        render_template_decorated
+        render_template_decorated, test_view_fileobject
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^test_view$', test_view),
     url(r'^test_render_response$', test_render_response),
+    url(r'^test_view_fileobject$', test_view_fileobject),
     url(r'^test_user/(?P<pk>\d+)$', UserPdfView.as_view()),
     url(r'^render_template_decorated$', render_template_decorated)
 ]
