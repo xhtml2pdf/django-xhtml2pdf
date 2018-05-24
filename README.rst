@@ -1,14 +1,13 @@
 Django xhtml2pdf
 ################
 
-THIS PROJECT IS UNMAINTAINED
+Attention
 =============================
 
-I haven't used this porject in years so it probably suffers from bitrot. Please get in touch if you would like to take over maintainership.
+This project is wrapper code between the django project and the xhtml2pdf
+project, both have a few maintaining so maybe are not ideal for your project.
 
-
-THis project is wrapper code between the django project and the xhtml2pdf
-project.
+Please get in touch if you would like to take over maintainership.
 
 What it does is simply allow people to create xhtml2pdf templates using all the
 cool django things like STATIC_URL etc.. (like one would for a webpage

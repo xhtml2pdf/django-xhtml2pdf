@@ -24,7 +24,7 @@ setup(
     platforms=['OS Independent'],
     classifiers=CLASSIFIERS,
     install_requires=[
-        'Django>=1.2',
+        'Django>=1.11',
     ],
     packages=find_packages(exclude=["example", "example.*"]),
     include_package_data=True,
