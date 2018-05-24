@@ -87,7 +87,7 @@ def render_to_pdf_response(template_name, context=None, pdfname=None, link_callb
 class PdfResponse(TemplateResponse):
     def render(self):
         retval = super(PdfResponse, self).render()
-        result = StringIO.StringIO()
+        result = StringIO()
         pisa.CreatePDF(
             self.rendered_content,
             dest=result,
