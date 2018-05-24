@@ -1,3 +1,4 @@
+{% load static %}
 <!-- 
 This is intended to be rendered to a PDF using pisa, not in a browser.
 Therefore, the HTML and CSS here can look a bit fishy. Please refer to 
@@ -93,7 +94,7 @@ h1, h2, h3, h4 { /* Don't add an outline to the document */
 </style>
 <body>
 <div id="company_logo">
-    <img src='test/logo_main.png' class="top_image" />
+    <img src="{% static 'test/logo_main.png' %}" class="top_image" />
 </div>
 <div id="address_sender" class="compact">
     Test Inc.<br />

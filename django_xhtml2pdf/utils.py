@@ -5,13 +5,15 @@ from django.http import HttpResponse
 from django.template.loader import get_template
 from django.template.response import TemplateResponse
 from xhtml2pdf import pisa # TODO: Change this when the lib changes.
-
+from django.conf import settings
 try:
     from StringIO import StringIO, BytesIO
 except:
     from io import StringIO, BytesIO
 
 import os
+import posixpath
+from django.contrib.staticfiles import finders
 
 #===============================================================================
 # HELPERS
@@ -26,6 +28,17 @@ def fetch_resources(uri, rel):
     `rel` gives a relative path, but it's not used here.
 
     """
+
+    if uri.startswith("http://") or uri.startswith("https://"):
+        return uri
+
+    if settings.DEBUG:
+        newpath = uri.replace(settings.STATIC_URL, "").replace(settings.MEDIA_URL, "")
+        normalized_path = posixpath.normpath(newpath).lstrip('/')
+        absolute_path = finders.find(normalized_path)  
+        if absolute_path:    
+            return absolute_path
+        
     if settings.MEDIA_URL and uri.startswith(settings.MEDIA_URL):
         path = os.path.join(settings.MEDIA_ROOT,
                             uri.replace(settings.MEDIA_URL, ""))
@@ -37,8 +50,6 @@ def fetch_resources(uri, rel):
                 path = os.path.join(d, uri.replace(settings.STATIC_URL, ""))
                 if os.path.exists(path):
                     break
-    elif uri.startswith("http://") or uri.startswith("https://"):
-        path = uri
     else:
         raise UnsupportedMediaPathException(
                                 'media urls must start with %s or %s' % (
