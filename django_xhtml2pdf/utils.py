@@ -3,6 +3,7 @@ import django
 from django.conf import settings
 from django.http import HttpResponse
 from django.template.loader import get_template
+from django.template.response import TemplateResponse
 from xhtml2pdf import pisa # TODO: Change this when the lib changes.
 
 try:
@@ -81,3 +82,15 @@ def render_to_pdf_response(template_name, context=None, pdfname=None, link_callb
         pdfname = '%s.pdf' % os.path.splitext(os.path.basename(template_name))[0]
     file_object['Content-Disposition'] = 'attachment; filename=%s' % pdfname
     return generate_pdf(template_name, file_object, context, link_callback=link_callback)
+
+
+class PdfResponse(TemplateResponse):
+    def render(self):
+        retval = super(PdfResponse, self).render()
+        result = StringIO.StringIO()
+        pisa.CreatePDF(
+            self.rendered_content,
+            dest=result,
+            link_callback=fetch_resources)
+        self.content = result.getvalue()
+        return retval
