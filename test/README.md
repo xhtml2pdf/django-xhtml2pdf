@@ -3,18 +3,18 @@ How to run test
 
 Install dependencies:
 
-``
-pip install django
-pip install xhtml2pdf
-``
+```
+  pip install django
+  pip install xhtml2pdf
+```
 
 Make migrations and one user (need for test):
 
-``
-cd d1_11
-python manage.py migrate
-python manage.py createsuperuser
-``
+```
+   cd d1_11
+   python manage.py migrate
+   python manage.py createsuperuser
+```
 
 Run server:
 
