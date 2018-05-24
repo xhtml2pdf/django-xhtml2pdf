@@ -25,8 +25,9 @@ setup(
     classifiers=CLASSIFIERS,
     install_requires=[
         'Django>=1.11',
+        'xhtml2pdf>=0.2.2'
     ],
-    packages=find_packages(exclude=["example", "example.*"]),
+    packages=find_packages(),
     include_package_data=True,
     zip_safe = False,
 )
