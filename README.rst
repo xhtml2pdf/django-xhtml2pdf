@@ -41,3 +41,22 @@ example::
         template_name = "product_pdf.html"
 
 It will output the rendered content of the view in pdf.
+
+Decorator
+============
+
+Simply do the following::
+
+    from django_xhtml2pdf.utils import pdf_decorator
+
+    @pdf_decorator
+    def myview(request):
+        return render(request, 'mytemplate.html')
+  
+Change de pdf file name::
+
+    from django_xhtml2pdf.utils import pdf_decorator
+
+    @pdf_decorator(pdfname='new_filename.pdf')
+    def myview(request):
+        return render(request, 'mytemplate.html')

@@ -45,7 +45,8 @@ def fetch_resources(uri, rel):
                                 settings.MEDIA_URL, settings.STATIC_URL))
     return path
 
-def generate_pdf_template_object(template_object, file_object, context, link_callback=fetch_resources):
+def generate_pdf_template_object(template_object, file_object, context, 
+                                        link_callback=fetch_resources):
     """
     Inner function to pass template objects directly instead of passing a filename
     """
@@ -59,7 +60,8 @@ def generate_pdf_template_object(template_object, file_object, context, link_cal
 # Main
 #===============================================================================
 
-def generate_pdf(template_name, file_object=None, context=None, link_callback=fetch_resources): # pragma: no cover
+def generate_pdf(template_name, file_object=None, context=None, 
+                    link_callback=fetch_resources): # pragma: no cover
     """
     Uses the xhtml2pdf library to render a PDF to the passed file_object, from the
     given template name.
@@ -73,15 +75,42 @@ def generate_pdf(template_name, file_object=None, context=None, link_callback=fe
     if not context:
         context = {}
     tmpl = get_template(template_name)
-    generate_pdf_template_object(tmpl, file_object, context, link_callback=link_callback)
+    generate_pdf_template_object(tmpl, file_object, context, 
+                                 link_callback=link_callback)
     return file_object
 
-def render_to_pdf_response(template_name, context=None, pdfname=None, link_callback=fetch_resources):
+def render_to_pdf_response(template_name, context=None, pdfname=None, 
+                                 link_callback=fetch_resources):
     file_object = HttpResponse(content_type='application/pdf')
     if not pdfname:
         pdfname = '%s.pdf' % os.path.splitext(os.path.basename(template_name))[0]
     file_object['Content-Disposition'] = 'attachment; filename=%s' % pdfname
-    return generate_pdf(template_name, file_object, context, link_callback=link_callback)
+    return generate_pdf(template_name, file_object, context, 
+                        link_callback=link_callback)
+
+
+def pdf_decorator(function=None, pdfname="file.pdf"):
+    def _dec(view_func):
+        def _view(*args, **kwargs):
+            response = HttpResponse(content_type='application/pdf')
+            response['Content-Disposition'] = 'attachment; filename=%s'%(pdfname)
+            result_func = view_func(*args, **kwargs).getvalue()
+            pisa.CreatePDF(
+                result_func,
+                dest=response,
+                link_callback=fetch_resources)
+            return response
+
+        _view.__name__ = view_func.__name__
+        _view.__dict__ = view_func.__dict__
+        _view.__doc__ = view_func.__doc__
+
+        return _view
+
+    if function is None:
+        return _dec       
+    return _dec(function)
+
 
 
 class PdfResponse(TemplateResponse):
