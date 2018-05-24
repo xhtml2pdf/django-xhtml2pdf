@@ -7,9 +7,9 @@ from django.template.response import TemplateResponse
 from xhtml2pdf import pisa # TODO: Change this when the lib changes.
 
 try:
-    from StringIO import StringIO
+    from StringIO import StringIO, BytesIO
 except:
-    from io import StringIO
+    from io import StringIO, BytesIO
 
 import os
 
@@ -87,7 +87,7 @@ def render_to_pdf_response(template_name, context=None, pdfname=None, link_callb
 class PdfResponse(TemplateResponse):
     def render(self):
         retval = super(PdfResponse, self).render()
-        result = StringIO()
+        result = BytesIO()
         pisa.CreatePDF(
             self.rendered_content,
             dest=result,
