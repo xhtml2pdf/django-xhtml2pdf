@@ -7,12 +7,18 @@ Attention
 This project is wrapper code between the django project and the xhtml2pdf
 project, both have a few maintaining so maybe are not ideal for your project.
 
-Please get in touch if you would like to take over maintainership.
-
 What it does is simply allow people to create xhtml2pdf templates using all the
 cool django things like STATIC_URL etc.. (like one would for a webpage
-template), and the utils function makes all the images and ressources appear in
+template), and the utils function makes all the images and resources appear in
 the pdf.
+
+This release (0.0.4) supports Django up to 1.11, and Python 2.7 and 3.6.
+
+NOTE:
+
+While this project is being maintained on a limited basis for legacy projects,
+we recommend strongly that new projects consider using
+`WeasyPrint <https://weasyprint.org>`.
 
 Usage
 =====
@@ -52,8 +58,8 @@ Simply do the following::
     @pdf_decorator
     def myview(request):
         return render(request, 'mytemplate.html')
-  
-Change de pdf file name::
+
+Change the pdf file name::
 
     from django_xhtml2pdf.utils import pdf_decorator
 

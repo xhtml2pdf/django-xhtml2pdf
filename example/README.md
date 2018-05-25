@@ -1,17 +1,29 @@
 How to run test
 =================
 
+Create a Virtual Environment and activate it
+
+```
+virtualenv xhtml2pdf-test
+source xhtml2pdf-test/bin/activate
+```
+
 Install dependencies:
 
 ```
-  pip install django
-  pip install xhtml2pdf
+  pip install -r example/requirements.txt
+```
+
+Install django-xhtml2pdf in 'develop' mode
+
+```
+  python setup.py develop
 ```
 
 Make migrations and one user (need for test):
 
 ```
-   cd d1_11
+   cd example/demo
    python manage.py migrate
    python manage.py createsuperuser
 ```
@@ -22,7 +34,7 @@ Run server:
 python manage.py runserver
 ``
 
-Go to this urls 
+Go to this urls
 
 - http://localhost:8000/test_view
 - http://localhost:8000/test_render_response
