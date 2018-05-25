@@ -12,7 +12,7 @@ cool django things like STATIC_URL etc.. (like one would for a webpage
 template), and the utils function makes all the images and resources appear in
 the pdf.
 
-This release (0.0.4) supports Django up to 1.11, and Python 2.7 and 3.6.
+This release (0.0.5) supports Django 2.0, and Python 3.6.
 
 NOTE:
 

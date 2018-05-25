@@ -6,12 +6,11 @@ CLASSIFIERS = [
     'Environment :: Web Environment',
     'Framework :: Django',
     'Framework :: Django :: 1.11',
+    'Framework :: Django :: 2.0',
     'Intended Audience :: Developers',
     'License :: OSI Approved :: BSD License',
     'Operating System :: OS Independent',
     'Programming Language :: Python',
-    'Programming Language :: Python :: 2',
-    'Programming Language :: Python :: 2.7',
     'Programming Language :: Python :: 3',
     'Programming Language :: Python :: 3.6',
     'Topic :: Software Development :: Libraries :: Application Frameworks',
@@ -30,7 +29,7 @@ setup(
     platforms=['OS Independent'],
     classifiers=CLASSIFIERS,
     install_requires=[
-        'Django<2.0',
+        'Django',
         'xhtml2pdf>=0.2.2'
     ],
     packages=find_packages(),

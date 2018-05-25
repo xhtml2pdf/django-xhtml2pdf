@@ -26,4 +26,3 @@ urlpatterns = [
     url(r'^test_user/(?P<pk>\d+)$', UserPdfView.as_view()),
     url(r'^render_template_decorated$', render_template_decorated)
 ]
-
